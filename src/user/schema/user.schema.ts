@@ -20,6 +20,8 @@ export class User{
     @Prop({ required: false })
     nickName: string;
     
+    @Prop()
+    token: string;
   
 }
 

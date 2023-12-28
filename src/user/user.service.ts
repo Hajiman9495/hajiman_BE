@@ -8,25 +8,24 @@ import {User,UserDocument} from './schema/user.schema'
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
   async create(createUserDto: CreateUserDto):Promise<CreateUserDto> {
-    console.log("?",createUserDto.id)
     const cuser = await new this.userModel(createUserDto)
     return cuser.save();
   }
 
   findAll() {
+    console.log("GUARD SUCCESS")
     return `This action returns all user`;
   }
 
   async findOne(id: string) {
-    console.log("<<<<<><>",id)
     const findId = await this.userModel.findOne({id:id});
-    console.log(findId)
     return findId;
 
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string,token:string) {
+    const updateUser = await this.userModel.findOneAndUpdate({id:id},{token:token}).lean()
+    return updateUser
   }
 
   remove(id: number) {

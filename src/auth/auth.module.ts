@@ -14,6 +14,7 @@ import { JwtStrategy } from './auth.strategy';
     PassportModule,
     JwtModule.register({
       secret:"hajiman",
+      global:true,  
       signOptions:{expiresIn:'5h'}
     }),
     UserModule
