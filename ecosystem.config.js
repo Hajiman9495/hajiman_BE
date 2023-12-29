@@ -1,8 +1,7 @@
 module.exports = {
   apps : [{
     name:"DTD",
-    instances:4,
-    exec_mode:'cluster',
+    exec_mode:'fork',
     script: './dist/main.js',
     watch: './dist'
   }],

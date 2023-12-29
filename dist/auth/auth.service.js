@@ -51,7 +51,9 @@ let AuthService = class AuthService {
             throw new common_1.UnauthorizedException("The password is wrong.");
         }
         const accessToken = await this.jwtService.signAsync(payload);
-        const result = await this.userModel.findOneAndUpdate({ id: userid }, { token: accessToken });
+        console.log("act", accessToken);
+        const result = await this.userModel.findOneAndUpdate({ id: userid }, { token: accessToken }, { new: true }).lean();
+        console.log("upd", result);
         return {
             result
         };
