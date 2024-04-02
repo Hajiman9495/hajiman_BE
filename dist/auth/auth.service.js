@@ -21,6 +21,8 @@ const user_schema_1 = require("../user/schema/user.schema");
 const mongoose_1 = require("mongoose");
 const mongoose_2 = require("@nestjs/mongoose");
 const bcrypt = require("bcryptjs");
+const school = require('../../jsons/school.json');
+const { includesJamo } = require('includes-jamo');
 let AuthService = class AuthService {
     constructor(userModel, configService, userService, jwtService) {
         this.userModel = userModel;
@@ -38,29 +40,28 @@ let AuthService = class AuthService {
         return createUser;
     }
     async login(userid, pw) {
-        console.log("???");
+        console.log('???');
         let findUser = await this.userModel.findOne({ id: userid });
         if (findUser == null) {
-            throw new common_1.UnauthorizedException("User not found.");
+            throw new common_1.UnauthorizedException('User not found.');
         }
         const payload = { sub: findUser._id };
-        if (findUser && await bcrypt.compare(String(pw), findUser.password)) {
-            console.log("PW OK");
+        if (findUser && (await bcrypt.compare(String(pw), findUser.password))) {
+            console.log('PW OK');
         }
         else {
-            throw new common_1.UnauthorizedException("The password is wrong.");
+            throw new common_1.UnauthorizedException('The password is wrong.');
         }
         const accessToken = await this.jwtService.signAsync(payload);
-        console.log("act", accessToken);
+        console.log('act', accessToken);
         const result = await this.userModel.findOneAndUpdate({ id: userid }, { token: accessToken }, { new: true }).lean();
-        console.log("upd", result);
+        console.log('upd', result);
         return {
-            result
+            result,
         };
     }
-    findAll() {
-        console.log("가드통과함");
-        return `This action returns all auth`;
+    getUnvList() {
+        return school;
     }
     findOne(id) {
         return `This action returns a #${id} auth`;
@@ -70,6 +71,13 @@ let AuthService = class AuthService {
     }
     remove(id) {
         return `This action removes a #${id} auth`;
+    }
+    async regSurvey(req, createSurveyDto) {
+        console.log('svs ID', req);
+        const updSurvey = await this.userModel
+            .findOneAndUpdate({ _id: req }, { survey: createSurveyDto }, { new: true })
+            .lean();
+        return updSurvey;
     }
 };
 exports.AuthService = AuthService;

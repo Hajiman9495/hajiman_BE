@@ -18,6 +18,7 @@ const auth_service_1 = require("./auth.service");
 const create_auth_dto_1 = require("./dto/create-auth.dto");
 const update_auth_dto_1 = require("./dto/update-auth.dto");
 const check_auth_dto_1 = require("./dto/check-auth.dto");
+const create_survey_dto_1 = require("./dto/create-survey.dto");
 const jwt_auth_guard_1 = require("./jwt-auth.guard");
 let AuthController = class AuthController {
     constructor(authService) {
@@ -27,12 +28,20 @@ let AuthController = class AuthController {
         return this.authService.signUp(createAuthDto);
     }
     login(checkauthDto) {
-        console.log("input data =>", checkauthDto);
+        console.log('input data =>', checkauthDto);
         return this.authService.login(checkauthDto.id, checkauthDto.password);
     }
-    findAll() {
-        console.log("?");
-        return this.authService.findAll();
+    findAll(req, test) {
+        console.log('?', test);
+        console.log('req', req.user);
+        return 'dd';
+    }
+    regSurvey(req, surveyDto) {
+        console.log('>>>>', req.user);
+        return this.authService.regSurvey(req.user, surveyDto);
+    }
+    getUnivList() {
+        return this.authService.getUnvList();
     }
     findOne(id) {
         return this.authService.findOne(+id);
@@ -61,11 +70,28 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
-    (0, common_1.Post)('/testg'),
+    (0, common_1.Get)('/findall'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    (0, common_1.Post)('/regSurvey'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, create_survey_dto_1.createSurveyDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "regSurvey", null);
+__decorate([
+    (0, common_1.Get)('/getUnvList'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], AuthController.prototype, "findAll", null);
+], AuthController.prototype, "getUnivList", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

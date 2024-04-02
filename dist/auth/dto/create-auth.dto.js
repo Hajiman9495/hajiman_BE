@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAuthDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateAuthDto {
+    constructor() {
+        this.survey = false;
+    }
 }
 exports.CreateAuthDto = CreateAuthDto;
 __decorate([
@@ -28,6 +31,11 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], CreateAuthDto.prototype, "phone", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], CreateAuthDto.prototype, "userName", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
@@ -38,5 +46,15 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
+], CreateAuthDto.prototype, "gender", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
 ], CreateAuthDto.prototype, "nickName", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateAuthDto.prototype, "survey", void 0);
 //# sourceMappingURL=create-auth.dto.js.map

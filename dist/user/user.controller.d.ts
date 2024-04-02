@@ -21,17 +21,20 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
-/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
+/// <reference types="mongoose-paginate-v2" />
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './schema/user.schema';
+import { CreateGroupDto } from './dto/create-group.dto';
+import { ObjectId } from 'mongoose';
+import { Request } from 'express';
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    create(createUserDto: CreateUserDto): Promise<CreateUserDto>;
-    findAll(): string;
-    findOne(id: string): Promise<import("mongoose").Document<unknown, {}, import("./schema/user.schema").UserDocument> & User & import("mongoose").Document<any, any, any> & {
+    regGroup(req: Request, creategroupDto: CreateGroupDto): Promise<any>;
+    selGroup(req: Request, groupId: ObjectId): Promise<import("mongoose").FlattenMaps<import("./schema/group.schema").GroupDocument> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    joinGroup(req: Request, groupId: ObjectId): Promise<import("mongoose").FlattenMaps<import("./schema/group.schema").GroupDocument> & {
         _id: import("mongoose").Types.ObjectId;
     }>;
     update(id: string, token: string): Promise<import("mongoose").FlattenMaps<import("./schema/user.schema").UserDocument> & {

@@ -22,17 +22,16 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
+/// <reference types="mongoose-paginate-v2" />
 import { Strategy } from 'passport-jwt';
 import { UserService } from '../user/user.service';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../user/schema/user.schema';
+import { UserDocument } from '../user/schema/user.schema';
 declare const JwtStrategy_base: new (...args: any[]) => Strategy;
 export declare class JwtStrategy extends JwtStrategy_base {
     private userModel;
     private userService;
     constructor(userModel: Model<UserDocument>, userService: UserService);
-    validate(payload: any): Promise<import("mongoose").Document<unknown, {}, UserDocument> & User & import("mongoose").Document<any, any, any> & {
-        _id: import("mongoose").Types.ObjectId;
-    }>;
+    validate(payload: any): Promise<any>;
 }
 export {};

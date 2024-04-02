@@ -22,9 +22,11 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
+/// <reference types="mongoose-paginate-v2" />
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { ConfigService } from "@nestjs/config";
+import { createSurveyDto } from './dto/create-survey.dto';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
 import { UserDocument } from '../user/schema/user.schema';
@@ -37,8 +39,11 @@ export declare class AuthService {
     constructor(userModel: Model<UserDocument>, configService: ConfigService, userService: UserService, jwtService: JwtService);
     signUp(createAuthDto: CreateAuthDto): Promise<any>;
     login(userid: string, pw: string): Promise<any>;
-    findAll(): string;
+    getUnvList(): any;
     findOne(id: number): string;
     update(id: number, updateAuthDto: UpdateAuthDto): string;
     remove(id: number): string;
+    regSurvey(req: any, createSurveyDto: createSurveyDto): Promise<import("mongoose").FlattenMaps<UserDocument> & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
 }

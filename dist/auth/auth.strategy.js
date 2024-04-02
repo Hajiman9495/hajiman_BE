@@ -30,14 +30,16 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.userService = userService;
     }
     async validate(payload) {
-        console.log(payload, "<<<<?");
+        console.log(payload, '<<<<?');
         const user = await this.userModel.findOne({ _id: payload.sub });
-        console.log(user);
+        const retrunvalue = user._id;
+        console.log(retrunvalue);
+        console.log('Validate print-------');
         if (!user) {
-            console.log("/????");
+            console.log('/????');
             throw new common_1.UnauthorizedException();
         }
-        return user;
+        return retrunvalue;
     }
 };
 exports.JwtStrategy = JwtStrategy;

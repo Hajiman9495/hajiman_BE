@@ -15,23 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
 const user_service_1 = require("./user.service");
-const create_user_dto_1 = require("./dto/create-user.dto");
+const create_group_dto_1 = require("./dto/create-group.dto");
 const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
-    async create(createUserDto) {
-        console.log("dsdsd");
-        return this.userService.create(createUserDto);
+    async regGroup(req, creategroupDto) {
+        console.log('creategroupDto', creategroupDto);
+        return this.userService.regGroup(req.user, creategroupDto);
     }
-    findAll() {
-        console.log("??DD?D?D?D?");
-        return this.userService.findAll();
+    selGroup(req, groupId) {
+        console.log('groupId', groupId, req.user);
+        return this.userService.selGroup(req.user, groupId);
     }
-    findOne(id) {
-        console.log("id", id);
-        return this.userService.findOne(id);
+    joinGroup(req, groupId) {
+        return this.userService.joinGroup(req.user, groupId);
     }
     update(id, token) {
         return this.userService.update(id, token);
@@ -42,26 +41,32 @@ let UserController = class UserController {
 };
 exports.UserController = UserController;
 __decorate([
-    (0, common_1.Post)("/create"),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
-    __metadata("design:returntype", Promise)
-], UserController.prototype, "create", null);
-__decorate([
-    (0, common_1.Post)('/fa'),
+    (0, common_1.Post)('/regGroup'),
     (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], UserController.prototype, "findAll", null);
+    __metadata("design:paramtypes", [Object, create_group_dto_1.CreateGroupDto]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "regGroup", null);
 __decorate([
-    (0, common_1.Get)('/findId'),
-    __param(0, (0, common_1.Query)('id')),
+    (0, common_1.Get)('/selGroup'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)('groupId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "findOne", null);
+], UserController.prototype, "selGroup", null);
+__decorate([
+    (0, common_1.Post)('/joinGroup'),
+    (0, common_1.UseGuards)(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)('groupId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "joinGroup", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id token')),

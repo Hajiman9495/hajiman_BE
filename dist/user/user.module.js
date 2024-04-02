@@ -12,6 +12,7 @@ const user_service_1 = require("./user.service");
 const user_controller_1 = require("./user.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("./schema/user.schema");
+const group_schema_1 = require("./schema/group.schema");
 const jwt_1 = require("@nestjs/jwt");
 const auth_strategy_1 = require("../auth/auth.strategy");
 let UserModule = class UserModule {
@@ -21,10 +22,12 @@ exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService, auth_strategy_1.JwtStrategy, jwt_1.JwtModule],
-        imports: [UserModule,
-            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }])
+        imports: [
+            UserModule,
+            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
+            mongoose_1.MongooseModule.forFeature([{ name: group_schema_1.Group.name, schema: group_schema_1.GroupSchema }]),
         ],
-        exports: [mongoose_1.MongooseModule, user_service_1.UserService]
+        exports: [mongoose_1.MongooseModule, user_service_1.UserService],
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

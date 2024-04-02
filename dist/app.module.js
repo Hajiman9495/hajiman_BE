@@ -14,22 +14,30 @@ const auth_module_1 = require("./auth/auth.module");
 const user_module_1 = require("./user/user.module");
 const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
+const meeting_module_1 = require("./meeting/meeting.module");
+const multer_module_1 = require("./multer/multer.module");
+const multer_service_1 = require("./multer/multer.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [auth_module_1.AuthModule, user_module_1.UserModule, config_1.ConfigModule.forRoot({ isGlobal: true }),
+        imports: [
+            auth_module_1.AuthModule,
+            user_module_1.UserModule,
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
             mongoose_1.MongooseModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: async (configService) => ({
                     uri: configService.get('MONGODB_URL'),
                 }),
                 inject: [config_1.ConfigService],
-            })
+            }),
+            meeting_module_1.MeetingModule,
+            multer_module_1.MulterModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, multer_service_1.MulterService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
