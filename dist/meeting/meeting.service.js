@@ -19,10 +19,12 @@ const mongoose_2 = require("mongoose");
 const meeting_schema_1 = require("./schema/meeting.schema");
 const user_schema_1 = require("../user/schema/user.schema");
 const requestList_schema_1 = require("./schema/requestList.schema");
+const multer_controller_1 = require("../multer/multer.controller");
 const moment = require("moment");
 const qrcode = require("qrcode");
 let MeetingService = class MeetingService {
-    constructor(meetingModel, userModel, reqListModel) {
+    constructor(upImg, meetingModel, userModel, reqListModel) {
+        this.upImg = upImg;
         this.meetingModel = meetingModel;
         this.userModel = userModel;
         this.reqListModel = reqListModel;
@@ -72,18 +74,27 @@ let MeetingService = class MeetingService {
         const reqInfoList = await this.reqListModel.paginate({ meetId: meetId }, { sort: { createdAt: -1 }, limit: limit, page: page });
         return reqInfoList;
     }
+    async meetingListForHome() {
+        const meetingInfo = await this.meetingModel
+            .find({ matching: false })
+            .limit(4)
+            .sort({ createdAt: -1 })
+            .select('title region body maxMember')
+            .lean();
+        return meetingInfo;
+    }
     async other(limit, file) {
-        console.log(limit);
-        console.log(file);
+        const ohFnc = await this.upImg.uploadS3(file, 'TSRT');
+        console.log('ohFnc[[[[[>', ohFnc);
         return 'd';
     }
 };
 exports.MeetingService = MeetingService;
 exports.MeetingService = MeetingService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(meeting_schema_1.Meeting.name)),
-    __param(1, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
-    __param(2, (0, mongoose_1.InjectModel)(requestList_schema_1.requestList.name)),
-    __metadata("design:paramtypes", [Object, mongoose_2.Model, Object])
+    __param(1, (0, mongoose_1.InjectModel)(meeting_schema_1.Meeting.name)),
+    __param(2, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
+    __param(3, (0, mongoose_1.InjectModel)(requestList_schema_1.requestList.name)),
+    __metadata("design:paramtypes", [multer_controller_1.MulterController, Object, mongoose_2.Model, Object])
 ], MeetingService);
 //# sourceMappingURL=meeting.service.js.map

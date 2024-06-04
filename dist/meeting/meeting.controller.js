@@ -39,6 +39,9 @@ let MeetingController = class MeetingController {
     selMeetingList(limit, page) {
         return this.meetingService.selMeetingList(limit, page);
     }
+    meetingListForHome() {
+        return this.meetingService.meetingListForHome();
+    }
     remove(limit, page, meetId) {
         return this.meetingService.selReqList(limit, page, meetId);
     }
@@ -80,6 +83,12 @@ __decorate([
     __metadata("design:paramtypes", [Number, Number]),
     __metadata("design:returntype", void 0)
 ], MeetingController.prototype, "selMeetingList", null);
+__decorate([
+    (0, common_1.Get)('/meetingListForHome'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MeetingController.prototype, "meetingListForHome", null);
 __decorate([
     (0, common_1.Get)('/selReqList'),
     __param(0, (0, common_1.Body)('limit')),

@@ -5,7 +5,9 @@ import { Meeting, MeetingSchema } from './schema/meeting.schema'
 import { requestList, requestListSchema } from './schema/requestList.schema'
 import { MongooseModule } from '@nestjs/mongoose'
 import { User, UserSchema } from 'src/user/schema/user.schema'
-
+import { MulterController } from 'src/multer/multer.controller'
+import { MulterModule } from 'src/multer/multer.module'
+import { MulterService } from 'src/multer/multer.service'
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -17,6 +19,6 @@ import { User, UserSchema } from 'src/user/schema/user.schema'
     // MongooseModule.forFeature([{ name: 'request', schema: requestListSchema }]),
   ],
   controllers: [MeetingController],
-  providers: [MeetingService],
+  providers: [MeetingService, MulterController, MulterService],
 })
 export class MeetingModule {}

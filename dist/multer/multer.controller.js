@@ -20,14 +20,14 @@ let MulterController = class MulterController {
     constructor(multerService) {
         this.multerService = multerService;
     }
-    async uploadS3(files) {
+    async uploadS3(files, folder) {
         console.log('?????????');
         let i = 0;
-        console.log('files??? ====>', files);
+        console.log('files??? ====>', folder);
         const imgurl = [];
         await Promise.all(files.map(async (file) => {
             i++;
-            const key = await this.multerService.uploadImage(file);
+            const key = await this.multerService.uploadImage(file, folder);
             console.log('path?:', key);
             imgurl.push(String(key));
         }));
@@ -40,7 +40,6 @@ let MulterController = class MulterController {
     }
     async selMeeting(files) {
         console.log('?');
-        await this.multerService.updImage(files);
         console.log('Test!@');
     }
 };
@@ -49,8 +48,9 @@ __decorate([
     (0, common_1.Post)('upl'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('files', 5)),
     __param(0, (0, common_1.UploadedFiles)()),
+    __param(1, (0, common_1.Body)('folder')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], MulterController.prototype, "uploadS3", null);
 __decorate([

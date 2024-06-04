@@ -17,6 +17,8 @@ const config_1 = require("@nestjs/config");
 const meeting_module_1 = require("./meeting/meeting.module");
 const multer_module_1 = require("./multer/multer.module");
 const multer_service_1 = require("./multer/multer.service");
+const multer_controller_1 = require("./multer/multer.controller");
+const self_module_1 = require("./self/self.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,9 +37,10 @@ exports.AppModule = AppModule = __decorate([
             }),
             meeting_module_1.MeetingModule,
             multer_module_1.MulterModule,
+            self_module_1.SelfModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, multer_service_1.MulterService],
+        providers: [app_service_1.AppService, multer_service_1.MulterService, multer_controller_1.MulterController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

@@ -52,7 +52,10 @@ export class MeetingController {
   selMeetingList(@Body('limit') limit: number, @Body('page') page: number) {
     return this.meetingService.selMeetingList(limit, page)
   }
-
+  @Get('/meetingListForHome')
+  meetingListForHome() {
+    return this.meetingService.meetingListForHome()
+  }
   @Get('/selReqList')
   remove(@Body('limit') limit: number, @Body('page') page: number, @Body('meetId') meetId: ObjectId) {
     return this.meetingService.selReqList(limit, page, meetId)

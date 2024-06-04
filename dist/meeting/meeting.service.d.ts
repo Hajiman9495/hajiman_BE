@@ -29,11 +29,13 @@ import mongoose, { Model, ObjectId, PaginateModel } from 'mongoose';
 import { Meeting, MeetingDocument } from './schema/meeting.schema';
 import { UserDocument } from '../user/schema/user.schema';
 import { requestList, requestListDocument } from './schema/requestList.schema';
+import { MulterController } from 'src/multer/multer.controller';
 export declare class MeetingService {
+    private readonly upImg;
     private meetingModel;
     private userModel;
     private reqListModel;
-    constructor(meetingModel: PaginateModel<MeetingDocument>, userModel: Model<UserDocument>, reqListModel: PaginateModel<requestListDocument>);
+    constructor(upImg: MulterController, meetingModel: PaginateModel<MeetingDocument>, userModel: Model<UserDocument>, reqListModel: PaginateModel<requestListDocument>);
     regMeeting(req: any, createMeetingDto: CreateMeetingDto): Promise<mongoose.Document<unknown, {}, MeetingDocument> & Meeting & mongoose.Document<any, any, any> & {
         _id: mongoose.Types.ObjectId;
     }>;
@@ -61,5 +63,8 @@ export declare class MeetingService {
     }, requestListDocument> & requestList & mongoose.Document<any, any, any> & {
         _id: mongoose.Types.ObjectId;
     }>>;
+    meetingListForHome(): Promise<(mongoose.FlattenMaps<MeetingDocument> & {
+        _id: mongoose.Types.ObjectId;
+    })[]>;
     other(limit: number, file: Express.Multer.File): Promise<string>;
 }

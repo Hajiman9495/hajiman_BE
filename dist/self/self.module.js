@@ -6,30 +6,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MeetingModule = void 0;
+exports.SelfModule = void 0;
 const common_1 = require("@nestjs/common");
-const meeting_service_1 = require("./meeting.service");
-const meeting_controller_1 = require("./meeting.controller");
-const meeting_schema_1 = require("./schema/meeting.schema");
-const requestList_schema_1 = require("./schema/requestList.schema");
+const self_service_1 = require("./self.service");
+const self_controller_1 = require("./self.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../user/schema/user.schema");
-const multer_controller_1 = require("../multer/multer.controller");
-const multer_service_1 = require("../multer/multer.service");
-let MeetingModule = class MeetingModule {
+const selfIntro_schema_1 = require("./schema/selfIntro.schema");
+let SelfModule = class SelfModule {
 };
-exports.MeetingModule = MeetingModule;
-exports.MeetingModule = MeetingModule = __decorate([
+exports.SelfModule = SelfModule;
+exports.SelfModule = SelfModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([
-                { name: meeting_schema_1.Meeting.name, schema: meeting_schema_1.MeetingSchema },
                 { name: user_schema_1.User.name, schema: user_schema_1.UserSchema },
-                { name: requestList_schema_1.requestList.name, schema: requestList_schema_1.requestListSchema },
+                { name: selfIntro_schema_1.selfIntro.name, schema: selfIntro_schema_1.selfIntroSchema },
             ]),
         ],
-        controllers: [meeting_controller_1.MeetingController],
-        providers: [meeting_service_1.MeetingService, multer_controller_1.MulterController, multer_service_1.MulterService],
+        controllers: [self_controller_1.SelfController],
+        providers: [self_service_1.SelfService],
     })
-], MeetingModule);
-//# sourceMappingURL=meeting.module.js.map
+], SelfModule);
+//# sourceMappingURL=self.module.js.map

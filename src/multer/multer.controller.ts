@@ -1,4 +1,4 @@
-import { Controller, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Post, UploadedFiles, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor, FilesInterceptor, FileFieldsInterceptor } from '@nestjs/platform-express'
 import { MulterService } from './multer.service'
 import { Express } from 'express'
@@ -12,15 +12,15 @@ export class MulterController {
   constructor(private readonly multerService: MulterService) {}
   @Post('upl')
   @UseInterceptors(FilesInterceptor('files', 5))
-  async uploadS3(@UploadedFiles() files) {
+  async uploadS3(@UploadedFiles() files, @Body('folder') folder: string) {
     console.log('?????????')
     let i = 0
-    console.log('files??? ====>', files)
+    console.log('files??? ====>', folder)
     const imgurl: string[] = []
     await Promise.all(
       files.map(async (file: File) => {
         i++
-        const key = await this.multerService.uploadImage(file)
+        const key = await this.multerService.uploadImage(file, folder)
         console.log('path?:', key)
         imgurl.push(String(key))
       })
@@ -38,7 +38,7 @@ export class MulterController {
   @UseInterceptors(FilesInterceptor('files', 5))
   async selMeeting(@UploadedFiles() files) {
     console.log('?')
-    await this.multerService.updImage(files)
+    // await this.multerService.uploadImage(files)
     console.log('Test!@')
   }
 }

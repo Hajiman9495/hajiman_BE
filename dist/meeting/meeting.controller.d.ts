@@ -50,6 +50,9 @@ export declare class MeetingController {
     }, MeetingDocument> & Meeting & mongoose.Document<any, any, any> & {
         _id: mongoose.Types.ObjectId;
     }>>;
+    meetingListForHome(): Promise<(mongoose.FlattenMaps<MeetingDocument> & {
+        _id: mongoose.Types.ObjectId;
+    })[]>;
     remove(limit: number, page: number, meetId: ObjectId): Promise<mongoose.PaginateResult<mongoose.Document<unknown, {
         sort: {
             createdAt: number;

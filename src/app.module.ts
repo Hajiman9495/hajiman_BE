@@ -8,6 +8,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { MeetingModule } from './meeting/meeting.module'
 import { MulterModule } from './multer/multer.module'
 import { MulterService } from './multer/multer.service'
+import { MulterController } from './multer/multer.controller'
+import { SelfModule } from './self/self.module';
 //MongooseModule.forRoot()
 @Module({
   imports: [
@@ -23,8 +25,9 @@ import { MulterService } from './multer/multer.service'
     }),
     MeetingModule,
     MulterModule,
+    SelfModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MulterService],
+  providers: [AppService, MulterService, MulterController],
 })
 export class AppModule {}

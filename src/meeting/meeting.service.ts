@@ -7,12 +7,13 @@ import { Meeting, MeetingDocument } from './schema/meeting.schema'
 import { User, UserDocument } from '../user/schema/user.schema'
 import { requestList, requestListDocument } from './schema/requestList.schema'
 import { MulterService } from 'src/multer/multer.service'
+import { MulterController } from 'src/multer/multer.controller'
 import * as moment from 'moment'
 import * as qrcode from 'qrcode'
 @Injectable()
 export class MeetingService {
   constructor(
-    // private readonly upImg: MulterService,
+    private readonly upImg: MulterController,
     @InjectModel(Meeting.name) private meetingModel: PaginateModel<MeetingDocument>,
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     @InjectModel(requestList.name) private reqListModel: PaginateModel<requestListDocument>
@@ -74,11 +75,20 @@ export class MeetingService {
     )
     return reqInfoList
   }
+  async meetingListForHome() {
+    const meetingInfo = await this.meetingModel
+      .find({ matching: false })
+      .limit(4)
+      .sort({ createdAt: -1 })
+      .select('title region body maxMember')
+      .lean()
+    return meetingInfo
+  }
 
   async other(limit: number, file: Express.Multer.File) {
-    // const ohFnc =  this.upImg.uploadImage()
-    console.log(limit)
-    console.log(file)
+    const ohFnc = await this.upImg.uploadS3(file, 'TSRT')
+    // console.log(limit)
+    console.log('ohFnc[[[[[>', ohFnc)
 
     return 'd'
   }
